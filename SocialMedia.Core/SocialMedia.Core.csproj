@@ -8,6 +8,8 @@
     <Folder Include="Entities\" />
     <Folder Include="Enumerations\" />
     <Folder Include="Interfaces\" />
+    <Folder Include="DTOs\" />
+    <Folder Include="Exceptions\" />
   </ItemGroup>
 
 </Project>
