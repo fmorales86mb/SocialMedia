@@ -6,6 +6,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using SocialMedia.Core.Interfaces;
+using SocialMedia.Infrastructure.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +28,10 @@ namespace SocialMedia.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            // Resolvemos la implementación de la dependencia
+            services.AddTransient<IPostRepository, PostRepository>();
+            //services.AddTransient<IPostRepository, PostMongoRepository>(); // Ejemplo de cómo cambiar de DB con Inyección de dependencias.
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
