@@ -1,0 +1,3 @@
+Comando del Package Manager Console para hacer un Scaffold de la DB (ingeniería inversa)
+
+Scaffold-DbContext "Server=(localdb)\MSSQLLocalDB;Database=SocialMedia;Integrated Security = true" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Data
