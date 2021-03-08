@@ -30,6 +30,20 @@ namespace SocialMedia.Infrastructure.Repositories
             return post;
         }
 
+        public async Task InsertPost(Post post)
+        {
+            try
+            {
+                this.context.Posts.Add(post);
+                await this.context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            
+        }
+
         // Metodo dummy
         //public async Task<IEnumerable<Post>> GetPosts()
         //{

@@ -29,6 +29,8 @@ namespace SocialMedia.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies()); // Acá tomo el profile que creé en la capa infrastructure y lo agrego a la api.
+
             services.AddControllers();
 
             services.AddDbContext<SocialMediaContext>(options =>
