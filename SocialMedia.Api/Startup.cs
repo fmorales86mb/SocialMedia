@@ -1,19 +1,15 @@
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using SocialMedia.Core.Interfaces;
 using SocialMedia.Infrastructure.Data;
+using SocialMedia.Infrastructure.Filters;
 using SocialMedia.Infrastructure.Repositories;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SocialMedia.Api
 {
@@ -31,7 +27,10 @@ namespace SocialMedia.Api
         {
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies()); // Acá tomo el profile que creé en la capa infrastructure y lo agrego a la api.
 
-            services.AddControllers();
+            services.AddControllers()
+                .ConfigureApiBehaviorOptions(options => {
+                    //options.SuppressModelStateInvalidFilter = true; // invalido la validación del modelo por default, la valido con un filtro.
+                });
 
             services.AddDbContext<SocialMediaContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("SocialMedia")
@@ -41,6 +40,14 @@ namespace SocialMedia.Api
             // Resolvemos la implementación de la dependencia
             services.AddTransient<IPostRepository, PostRepository>();
             //services.AddTransient<IPostRepository, PostMongoRepository>(); // Ejemplo de cómo cambiar de DB con Inyección de dependencias.
+
+            services.AddMvc(options =>
+            {
+                options.Filters.Add<ValidationFilter>(); // agrego filtro de manera global, para todos los controllers
+            }).AddFluentValidation(options =>
+            {
+                options.RegisterValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace SocialMedia.Api.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
+    [ApiController]    
     public class PostController : ControllerBase
     {
         private readonly IPostRepository postRepository;
